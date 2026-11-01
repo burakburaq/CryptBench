@@ -1,0 +1,56 @@
+# duration_seconds: positive seconds per run; in-flight work can extend it.
+# warmup: nonnegative hashes per worker before timing.
+# repeats: positive rounds; optional, default 1.
+# batch_size: positive operations per timed SHA, BLAKE3 or cipher batch; default 1024.
+# All algorithm sections must be present; unknown fields are errors.
+
+# Password Hashing
+argon2id:
+  duration_seconds: 5
+  warmup: 16
+  repeats: 4
+  m_mb: [ 32 ] # per-worker memory in MiB (1 MiB = 1024 KiB).
+  t: [ 3 ] # Iteration count
+  p_values: [ 1 ] # Argon2 lanes, not worker threads
+
+scrypt:
+  duration_seconds: 5
+  warmup: 16
+  repeats: 4
+  log_n_values: [ 15 ] # N = 2^log_n; memory is approximately 128 * N * r bytes per worker
+  r_values: [ 8 ] # Block size parameter
+  p_values: [ 3 ] # scrypt parallelization parameter, not worker threads
+
+# Hashing
+blake3:
+  duration_seconds: 5
+  warmup: 128
+  repeats: 4
+  batch_size: 16
+
+sha2:
+  duration_seconds: 5
+  warmup: 128
+  repeats: 4
+  batch_size: 16
+  variants: [ 256 ] # SHA output sizes; values: 256, 384, 512.
+
+sha3:
+  duration_seconds: 5
+  warmup: 128
+  repeats: 4
+  batch_size: 16
+  variants: [ 256 ] # SHA output sizes; values: 256, 384, 512.
+
+# Encryption
+aes256gcm:
+  duration_seconds: 5
+  warmup: 64
+  repeats: 2
+  batch_size: 16
+
+chacha20poly1305:
+  duration_seconds: 5
+  warmup: 64
+  repeats: 2
+  batch_size: 16

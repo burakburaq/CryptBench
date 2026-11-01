@@ -1,0 +1,17 @@
+{
+  "inputs": {
+    "password_hashing": {
+      "value": "benchmark-input!"
+    },
+    "hashing": {
+      "value": "benchmark-input!",
+      "size_bytes": 1048576
+    },
+    "encryption": {
+      "value": "benchmark-input!",
+      "size_bytes": 1048576
+    }
+  },
+  "preset": "presets/quick.yaml",
+  "workers_values": [ 1, 2 ]
+}
